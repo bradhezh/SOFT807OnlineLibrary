@@ -1,0 +1,42 @@
+.header {
+  color: green;
+  font-style: italic;
+}
+
+.footer {
+  color: blue;
+  font-style: italic;
+  font-size: 10,
+}
+
+.info {
+  color: blue;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.item {
+  color: grey;
+  padding-top: 15px;
+  font-size: 15px;
+}
+
+.itemline {
+  color: grey;
+  margin-bottom: 5px;
+  font-size: 15px;
+}

@@ -1,0 +1,36 @@
+name: AWS EB pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+jobs:
+  full:
+    name: Full pipeline on AWS EB
+    runs-on: ubuntu-20.04
+    concurrency: deploy-group
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - name: Test
+        env:
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+        run: npm test
+      - name: Install AWS EB CLI
+        run: pip install awsebcli
+      - name: Deploy
+        if: ${{ github.event_name == 'push' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # create the app and env locally at first
+        run: eb deploy
