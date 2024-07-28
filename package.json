@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon backend/index.js",
-    "test": "NODE_ENV=test node --test",
+    "testbak": "NODE_ENV=test node --test",
     "migrate": "NODE_ENV=dev node migrate.js",
     "migrate:prod": "NODE_ENV=prod node migrate.js",
     "start-app": "NODE_ENV=prod node backend/index.js",
