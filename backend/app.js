@@ -12,38 +12,40 @@ const routerItems = require('./controllers/items')
 
 const app = express()
 
-mongoose.set('strictQuery', false)
-logger.info(
-  'connecting to',
-  config.NODE_ENV !== config.NODE_ENV_PRD ? config.MONGO_URL : 'database'
-)
+const init = async () => {
+  await config.init()
 
-mongoose.connect(config.MONGO_URL)
-  .then(() => {
-    logger.info('connected')
+  mongoose.set('strictQuery', false)
+  logger.info(
+    'connecting to',
+    config.NODE_ENV !== config.NODE_ENV_PRD ? config.MONGO_URL : 'database'
+  )
 
-  }).catch(err => {
-    logger.error('connecting to MongoDB failed:', err.message)
+  await mongoose.connect(config.MONGO_URL)
+  logger.info('connected')
+
+  app.use(express.static('dist'))
+  app.use(express.json())
+
+  app.use(middleware.loggerReq)
+
+  app.get('/', (req, res) => {
+    res.send('<h1>Hello World!</h1>')
   })
 
-app.use(express.static('dist'))
-app.use(express.json())
+  app.get('/version', (req, res) => {
+    res.send('0')
+  })
 
-app.use(middleware.loggerReq)
+  app.use(config.USERS_ROUTE, routerUsers)
+  app.use(config.LOGIN_ROUTE, routerLogin)
+  app.use(config.ITEMS_ROUTE, routerItems)
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>')
-})
+  app.use(middleware.endpointUnknown)
+  app.use(middleware.handlerErr)
+}
 
-app.get('/version', (req, res) => {
-  res.send('0')
-})
-
-app.use(config.USERS_ROUTE, routerUsers)
-app.use(config.LOGIN_ROUTE, routerLogin)
-app.use(config.ITEMS_ROUTE, routerItems)
-
-app.use(middleware.endpointUnknown)
-app.use(middleware.handlerErr)
-
-module.exports = app
+module.exports = {
+  app,
+  init,
+}
