@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "NODE_ENV=dev nodemon backend/index.js",
     "testbak": "NODE_ENV=test node --test",
-    "migrate": "npx migrate-mongo up",
+    "migrate": "NODE_ENV=dev node migrate.js",
+    "migrate:prod": "NODE_ENV=prod node migrate.js",
     "start-app": "NODE_ENV=prod node backend/index.js",
-    "start": "npm run migrate && npm run start-app",
+    "start": "npm run migrate:prod && npm run start-app",
     "dev:ui": "vite frontend",
     "build": "vite build frontend --outDir ../dist --emptyOutDir",
     "preview": "vite preview",

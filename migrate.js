@@ -26,6 +26,8 @@ const items = [{
 }]
 
 ;(async () => {try {
+  await config.init()
+
   mongoose.set('strictQuery', false)
   logger.info(
     'connecting to',
