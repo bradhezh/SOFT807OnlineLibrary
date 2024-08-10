@@ -37,7 +37,8 @@ config.init = async () => {
   config.PLATFORM_AWS = 'aws'
 
   if (config.PLATFORM === config.PLATFORM_AZURE) {
-    config.MONGO_URL = process.env.DB_URL
+    config.MONGO_URL = await azure.getSec('DB-URL')
+    console.log(config.MONGO_URL)
     config.SECRET = process.env.SECRET
     config.SALT = Number(process.env.SALT)
     config.ADMIN_INITIAL_USERNAME = process.env.ADMIN_INITIAL_USERNAME
