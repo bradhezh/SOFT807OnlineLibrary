@@ -38,11 +38,16 @@ config.init = async () => {
 
   if (config.PLATFORM === config.PLATFORM_AZURE) {
     config.MONGO_URL = await azure.getSec('DB-URL')
+    config.SECRET = await azure.getSec('SECRET')
+    config.SALT = await azure.getSec('SALT')
+    config.SALT = Number(config.SALT)
+    config.ADMIN_INITIAL_USERNAME = await azure.getSec('ADMIN-INITIAL-USERNAME')
+    config.ADMIN_INITIAL_PASSWORD = await azure.getSec('ADMIN-INITIAL-PASSWORD')
     console.log(config.MONGO_URL)
-    config.SECRET = process.env.SECRET
-    config.SALT = Number(process.env.SALT)
-    config.ADMIN_INITIAL_USERNAME = process.env.ADMIN_INITIAL_USERNAME
-    config.ADMIN_INITIAL_PASSWORD = process.env.ADMIN_INITIAL_PASSWORD
+    console.log(config.SECRET)
+    console.log(config.SALT)
+    console.log(config.ADMIN_INITIAL_USERNAME)
+    console.log(config.ADMIN_INITIAL_PASSWORD)
     return
   }
 
