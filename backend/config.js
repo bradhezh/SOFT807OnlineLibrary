@@ -43,11 +43,6 @@ config.init = async () => {
     config.SALT = Number(config.SALT)
     config.ADMIN_INITIAL_USERNAME = await azure.getSec('ADMIN-INITIAL-USERNAME')
     config.ADMIN_INITIAL_PASSWORD = await azure.getSec('ADMIN-INITIAL-PASSWORD')
-    console.log(config.MONGO_URL)
-    console.log(config.SECRET)
-    console.log(config.SALT)
-    console.log(config.ADMIN_INITIAL_USERNAME)
-    console.log(config.ADMIN_INITIAL_PASSWORD)
     return
   }
 
